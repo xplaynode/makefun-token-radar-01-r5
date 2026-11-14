@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Launch Radar — pre-token launch candidates, ranked</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header>
+  <h1>Launch Radar</h1>
+  <p class="sub" id="summary">Loading the sealed snapshot…</p>
+  <nav id="tabs">
+    <button data-view="board" class="active">Board</button>
+    <button data-view="method">Method</button>
+    <button data-view="products">Set aside</button>
+    <button data-view="live">Live tokens</button>
+  </nav>
+</header>
+
+<section id="view-board" class="view">
+  <div class="controls">
+    <input id="q" type="search" placeholder="Search protocol or slug…" autocomplete="off">
+    <select id="cat"><option value="">All categories</option></select>
+    <label class="check"><input id="watch-only" type="checkbox"> Watchlist only</label>
+    <span id="shown" class="dim"></span>
+  </div>
+  <table id="board-table">
+    <thead>
+      <tr>
+        <th>#</th><th>Protocol</th><th>Category</th><th>Chains</th>
+        <th class="num">TVL</th><th class="num">7d</th>
+        <th class="num">Implied value</th><th class="num">Range</th><th></th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</section>
+
+<section id="view-detail" class="view hidden">
+  <button id="back" type="button">← Back to the board</button>
+  <div id="detail"></div>
+</section>
+
+<section id="view-method" class="view hidden">
+  <h2>How the values are derived</h2>
+  <p>
+    Every protocol in the snapshot that already has a token contributes its
+    market-cap-to-TVL ratio. A pre-token protocol is priced off the median
+    ratio of its own category, shrunk toward the global median with six
+    pseudo-peers of weight, clamped to a sane band, and pulled further toward
+    the global figure when the category has fewer than three peers. The value
+    range reruns the same arithmetic with the category's first and third
+    quartile ratios. Momentum (7-day TVL change, capped), seasoning (age) and
+    breadth (chain count) adjust the headline multiple.
+  </p>
+  <div id="method-body"></div>
+</section>
+
+<section id="view-products" class="view hidden">
+  <h2>Products set aside</h2>
+  <p>Pre-token protocols that are products of an asset that already trades — not independent launch candidates.</p>
+  <table id="products-table">
+    <thead>
+      <tr><th>Protocol</th><th>Category</th><th>Chains</th><th class="num">TVL</th><th>Why set aside</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</section>
+
+<section id="view-live" class="view hidden">
+  <h2>Live tokens, shown apart</h2>
+  <p>The largest tokenised protocols at their recorded market values — the peer evidence the board is priced from, not candidates.</p>
+  <table id="live-table">
+    <thead>
+      <tr><th>Protocol</th><th>Symbol</th><th>Category</th><th class="num">TVL</th><th class="num">Market cap</th><th class="num">mcap / TVL</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</section>
+
+<footer id="foot" class="dim"></footer>
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
